@@ -2,30 +2,53 @@
 <html>
 <head></head>
 <body>
-  <div>me div <b>xaa</b></div>
+  <a>aa</a>
+red
   <script src="StyleSheet.js"></script>
   <script>
-    var styleShit = new StyleSheet;
-    styleShit.addRule("div", {
-      color: "red",
-      LoL: "yas"
-    });
-    styleShit.editRule("div", {
-      fontSize: "16pt"
-    });
-    // note: prop sets or gets value
-    var fsVal = styleShit.prop("div", "fontSize");
-    styleShit.prop("div", "fontSize", "17pt");
-    // note: renameRules may f*ck all to "b"
-    styleShit.renameRules("div", "b");
-    var ruleStr = styleShit.getRule("b");
-    styleShit.addRule("div", {
-      color: "lime",
-    });
-    styleShit.removeRule("div");
-    styleShit.cloneRule("b", "div");
-    styleShit.compile();
-    styleShit.moveTo(document.body);
+    // [Begin] "UNDEPENDENT OF INSTANCING" functions
+    // have you ever wanted to convert css string to css sheet?
+    // then you can use cool function to do it for thee:
+    // (i know for ` too, but it isn't supported in older)
+    var sheet = StyleSheet.css2sheet('\
+		color: red\
+	');
+    console.log(sheet);
+    // [End]
+    var ss = new StyleSheet;
+    var COMPILE = true,
+      GET_INDEX = true;
+    // POSSIBLE CRITICAL MISUNDERSTANDING OF COMPILE:
+    // COMPILE is unnecessary, just do ss.compile() WHEN you finish
+    // add rule, i like colour red
+    ss.setRules("body", {
+      color: "red"
+    }, COMPILE);
+    // nah Lime is good for eyes...
+    ss.setRules("body", {
+      color: "lime"
+    }, COMPILE);
+    // i'll just clone body and make it for div
+    ss.cloneRule("body", "div", COMPILE);
+    // or maybe it should be called "a"?
+    ss.renameRule("div", "a", COMPILE);
+    // well i don't need body anymore!
+    ss.removeRule("body", COMPILE);
+    // set a's colour
+    ss.prop("a", "color", "red", COMPILE);
+    // get a's colour
+    var colour = ss.prop("a", "color");
+    // does my body exist?
+    var cond0 = ss.hasRule("body"); // false, oh noo
+    // does "a" exist?
+    var cond1 = ss.hasRule("a"); // true yass
+    // get me id of damn "a" tag
+    var index = ss.hasRule("a", GET_INDEX); // 0
+    // get me its css keys & values
+    var allCSSRules = ss.getAllRules();
+    // get its rules
+    // don't touch boobs if you don't know how
+    console.log(allCSSRules[index]);
   </script>
 </body>
 </html>
