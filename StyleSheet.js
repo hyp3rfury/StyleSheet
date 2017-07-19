@@ -112,6 +112,7 @@
     base.getRules = getRulesFor;
     base.setRules = setRules;
     base.hasRule = hasRule;
+	base.compile = compile;
     sm.css2sheet = s2sheet;
     sm.sheet2css = sheet2s;
   })();
